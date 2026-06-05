@@ -10,10 +10,10 @@ export default function Header() {
         <p className="text-white">Shelter for pets in Boston</p>
       </div>
       <div className="flex gap-7">
-        <p className="text-white  decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline decoration-red-500}">About the shelter</p>
-        <p className="text-white">Our pets</p>
-        <p className="text-white">Help the shelter</p>
-        <p className="text-white">Contacts</p>
+        <Link href='' className="text-white  decoration-[#F1CDB3] decoration-2 underline-offset-6 underline">About the shelter</Link>
+        <Link href='/OurPets' className="text-white decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">Our pets</Link>
+        <Link href='' className="text-white decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">Help the shelter</Link>
+        <Link href='' className="text-white decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">Contacts</Link>
       </div>
      </div>
     </div>
