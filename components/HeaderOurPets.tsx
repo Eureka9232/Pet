@@ -10,11 +10,24 @@ export default function HeaderOurPets() {
         <p className="text-[#292929]">Shelter for pets in Boston</p>
       </div>
       <div className="flex gap-7">
-        <Link href='..' className="text-[#545454]  decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">About the shelter</Link>
-        <Link href='/OurPets' className="text-[#292929] decoration-[#F1CDB3] decoration-2 underline-offset-6 underline">Our pets</Link>
-        <Link href='' className="text-[#545454] decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">Help the shelter</Link>
-        <Link href='' className="text-[#545454] decoration-[#F1CDB3] decoration-2 underline-offset-6 hover:underline">Contacts</Link>
+         <Link href='/' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
+            About the shelter
+          </Link>
+          
+          {/* Вторая ссылка (Активная): линия зафиксирована на всю ширину */}
+          <Link href='/OurPets' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#F1CDB3]">
+            Our pets
+          </Link>
+          
+          <Link href='' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
+            Help the shelter
+          </Link>
+          
+          <Link href='' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
+            Contacts
+          </Link>
       </div>
+
      </div>
     </div>
   );

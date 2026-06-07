@@ -28,9 +28,10 @@ export default function Friends() {
             />
 
             </div>
-            <button className="bg-[#F1CDB3] text-[#292929] w-[261px] h-[52px] rounded-full">
+            <button className="w-[261px] h-[52px] bg-[#F1CDB3] hover:bg-[#E1B191] text-[#545454] hover:text-[#292929] rounded-full font-medium transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer shadow-md hover:shadow-lg">
                 Get to know the rest
             </button>
+
 
         </div>
     </div>

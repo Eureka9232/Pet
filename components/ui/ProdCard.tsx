@@ -11,22 +11,22 @@ type ProductCardProps ={
   imageSrc:string
 };
 
-
 export default function ProdCard({name,imageSrc}:ProductCardProps) {
 return(
-        <div>
-                            <div className="bg-white rounded-2xl gap-6 flex flex-col items-center pb-6">
+        <div className="p-2"> {/* Небольшой паддинг, чтобы карточка не обрезалась при увеличении */}
+                <div className="bg-white rounded-2xl gap-6 flex flex-col items-center pb-6 shadow-sm hover:shadow-xl transform hover:scale-[1.03] transition-all duration-300 ease-in-out cursor-pointer">
                     <Image 
                     src={imageSrc}
-                    alt="Описание" 
-                    className="w-full h-full overflow-hidden"
+                    alt={name} /* Лучше использовать name для доступности */
+                    className="w-full h-full overflow-hidden rounded-t-2xl" /* Скруглил верх картинки под стать карточке */
+                    width={270} /* Рекомендуется указать размеры для Next/Image */
+                    height={270}
                     />
-                    <p>{name}</p>
-                    <button className="w-[187px] h-[52px] rounded-3xl border border-[#F1CDB3] border-2  text-[#2F2F2F] hover:bg-[#F2D0C1]/10 transition-colors">
+                    <p className="text-[#545454] font-medium text-xl">{name}</p>
+                    <button className="w-[187px] h-[52px] rounded-3xl border-2 border-[#F1CDB3] text-[#2F2F2F] hover:bg-[#F1CDB3] transition-colors duration-300">
                     Learn more
                     </button>
                 </div>
         </div>
-
 )
 }
