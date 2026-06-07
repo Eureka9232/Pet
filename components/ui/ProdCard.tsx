@@ -2,18 +2,41 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence, Variants } from "framer-motion"; // Импортируем motion, AnimatePresence и типы
 
-// 1. Расширяем тип пропсов, добавляя все нужные характеристики
 type ProductCardProps = {
   name: string;
   imageSrc: string;
-  type: string;        // Например: "Dog"
-  breed: string;       // Например: "Labrador"
-  description: string; // Уникальное описание
-  age: string;         // Например: "2 months"
-  inoculations?: string; // Необязательное поле (если не передано, будет "none")
+  type: string;        
+  breed: string;       
+  description: string; 
+  age: string;         
+  inoculations?: string; 
   diseases?: string;
   parasites?: string;
+};
+
+// Настройки анимации для затемненного заднего фона (Overlay)
+const overlayVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+// Настройки анимации для белого контентного окна
+const modalVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.9, y: 15 }, // Начинается чуть уменьшенным и опущенным
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 28 } // Мягкий, приятный пружинящий эффект
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.95, 
+    y: 10,
+    transition: { duration: 0.2, ease: 'easeIn' } // Быстрое затухание при закрытии
+  }
 };
 
 export default function ProdCard({ 
@@ -23,7 +46,7 @@ export default function ProdCard({
   breed, 
   description, 
   age, 
-  inoculations = "none", // Значение по умолчанию
+  inoculations = "none", 
   diseases = "none", 
   parasites = "none" 
 }: ProductCardProps) {
@@ -50,64 +73,81 @@ export default function ProdCard({
         </button>
       </div>
 
-      {/* Всплывающее окно с динамическими данными */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0" onClick={() => setIsOpen(false)}></div>
+      {/* Обязательно оборачиваем условие в AnimatePresence для анимации ИСЧЕЗНОВЕНИЯ */}
+      <AnimatePresence>
+        {isOpen && (
+          // Превращаем темную подложку в motion.div
+          <motion.div 
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden" // Анимация при закрытии
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-[2px]"
+          >
+            {/* Клик по фону закрывает окно */}
+            <div className="absolute inset-0" onClick={() => setIsOpen(false)}></div>
 
-          <div className="bg-white rounded-3xl p-6 md:p-12 max-w-[900px] w-full flex flex-col md:flex-row gap-11 relative z-10 shadow-2xl">
-            
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="absolute -top-12 right-0 md:-top-10 md:-right-10 w-10 h-10 border-2 border-[#F1CDB3] rounded-full flex items-center justify-center text-black hover:bg-[#F1CDB3] transition-colors duration-300 cursor-pointer text-xl"
+            {/* Белое модальное окно превращаем в motion.div */}
+            <motion.div 
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit" // Точка выхода из анимации
+              className="bg-white rounded-3xl p-6 md:p-12 max-w-[900px] w-full flex flex-col md:flex-row gap-11 relative z-10 shadow-2xl"
             >
-              ✕
-            </button>
+              
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="absolute -top-12 right-0 md:-top-10 md:-right-10 w-10 h-10 border-2 border-[#F1CDB3] rounded-full flex items-center justify-center text-black hover:bg-[#F1CDB3] transition-colors duration-300 cursor-pointer text-xl"
+              >
+                ✕
+              </button>
 
-            <div className="w-full md:w-[500px] flex justify-center items-center">
-              <Image 
-                src={imageSrc} 
-                alt={name} 
-                width={500} 
-                height={500} 
-                className="object-contain max-h-[350px] md:max-h-[500px]"
-              />
-            </div>
-
-            {/* Выводим данные из пропсов */}
-            <div className="flex flex-col gap-6 max-w-[350px]">
-              <div>
-                <h3 className="text-4xl font-Georgia text-black mb-2">{name}</h3>
-                <h4 className="text-xl font-Georgia text-black">{type} - {breed}</h4>
+              <div className="w-full md:w-[500px] flex justify-center items-center">
+                <Image 
+                  src={imageSrc} 
+                  alt={name} 
+                  width={500} 
+                  height={500} 
+                  className="object-contain max-h-[350px] md:max-h-[500px]"
+                />
               </div>
 
-              <p className="text-base text-black font-Georgia leading-relaxed">
-                {description}
-              </p>
+              {/* Правая часть: Описание и характеристики */}
+              <div className="flex flex-col gap-6 max-w-[350px]">
+                <div>
+                  <h3 className="text-4xl font-Georgia text-black mb-2">{name}</h3>
+                  <h4 className="text-xl font-Georgia text-black">{type} - {breed}</h4>
+                </div>
 
-              <ul className="flex flex-col gap-3 font-Georgia text-base text-black">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
-                  <strong>Age:</strong> {age}
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
-                  <strong>Inoculations:</strong> {inoculations}
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
-                  <strong>Diseases:</strong> {diseases}
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
-                  <strong>Parasites:</strong> {parasites}
-                </li>
-              </ul>
-            </div>
+                <p className="text-base text-black font-Georgia leading-relaxed">
+                  {description}
+                </p>
 
-          </div>
-        </div>
-      )}
+                <ul className="flex flex-col gap-3 font-Georgia text-base text-black">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
+                    <strong>Age:</strong> {age}
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
+                    <strong>Inoculations:</strong> {inoculations}
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
+                    <strong>Diseases:</strong> {diseases}
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-[#F1CDB3] rounded-full inline-block"></span>
+                    <strong>Parasites:</strong> {parasites}
+                  </li>
+                </ul>
+              </div>
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

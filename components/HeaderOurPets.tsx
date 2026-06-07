@@ -1,16 +1,38 @@
+'use client'; // Обязательно для анимации на клиенте
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion, Variants } from "framer-motion"; // Импортируем motion и типы
+
+// Анимация появления шапки сверху при заходе на страницу
+const headerVariants: Variants = {
+  hidden: { opacity: 0, y: -20 }, // Начало: скрыта и приподнята вверх на 20px
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1] // Наша фирменная плавная кривая скорости
+    }
+  }
+};
 
 export default function HeaderOurPets() {
   return (
-    <div className="">
-    <div className="flex justify-between items-center py-5">
-      <div className="flex flex-col gap-1">
-        <p className="text-4xl text-[#545454]">Cozy House</p>
-        <p className="text-[#292929]">Shelter for pets in Boston</p>
-      </div>
-      <div className="flex gap-7">
-         <Link href='/' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
+    // Меняем обычный div на motion.div и вешаем анимацию на заход
+    <motion.div 
+      variants={headerVariants}
+      initial="hidden"
+      animate="visible" // Сработает сразу автоматически при загрузке страницы
+      className=""
+    >
+      <div className="flex justify-between items-center py-5">
+        <div className="flex flex-col gap-1">
+          <p className="text-4xl text-[#545454]">Cozy House</p>
+          <p className="text-[#292929]">Shelter for pets in Boston</p>
+        </div>
+        <div className="flex gap-7">
+          <Link href='/' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
             About the shelter
           </Link>
           <Link href='/OurPets' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#F1CDB3]">
@@ -24,9 +46,8 @@ export default function HeaderOurPets() {
           <Link href='' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
             Contacts
           </Link>
+        </div>
       </div>
-
-     </div>
-    </div>
+    </motion.div>
   );
 }
