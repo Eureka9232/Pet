@@ -16,19 +16,44 @@ export default function Friends() {
             <Image
             src={Prav}
             alt="Фон"
-            className="object-cover object-center"
+            className="object-cover object-center cursor-pointer hover:scale-[1.05] transition-all duration-300 ease-in-out"
             />
-                <ProdCard imageSrc={Cat} name="Katrine"/>
-                <ProdCard imageSrc={Dog} name="Jennifer"/>
-                <ProdCard imageSrc={Dog2} name="Woody"/> 
+<ProdCard 
+        imageSrc={Cat} 
+        name="Sophia"
+        type="Dog"
+        breed="Shih Tzu"
+        age="1 month"
+        description="Sophia is a tiny and delicate pup who needs lots of love and attention. She enjoys being held and prefers quiet environments where she can sleep peacefully."
+      />
+
+      <ProdCard 
+        imageSrc={Dog} 
+        name="Timmy"
+        type="Cat"
+        breed="Bengal"
+        age="4 months"
+        description="Timmy is an incredibly curious and smart kitten. He loves high places, exploring every corner of the house, and he will amaze you with his playful tricks."
+        inoculations="panleukopenia"
+      />
+
+      <ProdCard 
+        imageSrc={Dog2} 
+        name="Charly"
+        type="Dog"
+        breed="Jack Russell Terrier"
+        age="8 months"
+        description="Charly is a little bundle of joy and endless energy. He is highly trainable, loves learning new commands, and will be the perfect companion for active people."
+        inoculations="rabies"
+      /> 
             <Image 
             src={Lev}
             alt="Описание" 
-            className="overflow-hidden"
+            className="overflow-hidden cursor-pointer hover:scale-[1.05] transition-all duration-300 ease-in-out"
             />
 
             </div>
-            <button className="w-[261px] h-[52px] bg-[#F1CDB3] hover:bg-[#E1B191] text-[#545454] hover:text-[#292929] rounded-full font-medium transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer shadow-md hover:shadow-lg">
+            <button className="w-[261px] h-[52px] bg-[#F1CDB3] hover:bg-[#ffc69f] text-[#545454] hover:text-[#292929] rounded-full font-medium transform hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer shadow-md hover:shadow-lg">
                 Get to know the rest
             </button>
 

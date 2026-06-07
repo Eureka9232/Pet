@@ -13,8 +13,6 @@ export default function HeaderOurPets() {
          <Link href='/' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2px] after:bg-[#F1CDB3] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">
             About the shelter
           </Link>
-          
-          {/* Вторая ссылка (Активная): линия зафиксирована на всю ширину */}
           <Link href='/OurPets' className="text-[#292929] relative after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-[#F1CDB3]">
             Our pets
           </Link>
